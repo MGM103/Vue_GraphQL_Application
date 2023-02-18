@@ -8,7 +8,7 @@ const FrameworkSchema = new Schema({
   thesis: {type: String},
   bullcase: {type: String},
   bearcase: {type: String},
-  aquisitionStrat: {type: String},
+  acquisitionStrat: {type: String},
   exitConditions: {type: String},
   user: {type: Schema.Types.ObjectId, ref: 'user'}
 });
