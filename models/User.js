@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
@@ -25,4 +25,6 @@ UserSchema.statics.findFramework = function(id) {
     .then(user => user.frameworks);
 };
 
-mongoose.model('user', UserSchema);
+const User = mongoose.model('user', UserSchema)
+
+export default User;

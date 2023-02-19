@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const FrameworkSchema = new Schema({
@@ -37,4 +37,6 @@ FrameworkSchema.statics.addNarative = function(id, name) {
     });
 };
 
-mongoose.model('framework', FrameworkSchema);
+const Framework = mongoose.model('framework', FrameworkSchema);
+
+export default Framework;

@@ -1,6 +1,4 @@
-const { gql } = require('@apollo/server');
-
-module.exports = `#graphql
+export default `#graphql
     type Framework {
         id: ID!,
         protocol: String,

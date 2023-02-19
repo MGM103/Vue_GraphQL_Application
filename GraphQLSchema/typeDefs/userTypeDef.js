@@ -1,6 +1,4 @@
-const { gql } = require('@apollo/server');
-
-module.exports = `#graphql
+export default `#graphql
     type User {
         id: ID!,
         username: String,
