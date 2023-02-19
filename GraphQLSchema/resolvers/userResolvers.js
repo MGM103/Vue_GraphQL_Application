@@ -21,7 +21,8 @@ const userResolvers = {
     changePassword: async (_, { id, password }) => {
       const result = await User.updateOne({ _id: id }, { password });
       return result.ok === 1;
-    }
+    },
+    //addFramework: async (_, {})
   },
   User: {
     frameworks: (parent) => User.findFramework(parent.id)

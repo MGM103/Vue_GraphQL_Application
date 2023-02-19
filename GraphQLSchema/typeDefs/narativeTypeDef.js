@@ -14,12 +14,13 @@ export default `#graphql
 
     input NarativeInput {
         id: ID!,
-        name: String
+        name: String,
+        description: String
     } 
 
     type Mutation {
-        createNarative(user: NarativeInput!): Narative!
-        deleteNarative(user: NarativeInput!): Boolean
+        createNarative(narative: NarativeInput!): Narative!
+        deleteNarative(narative: NarativeInput!): Boolean
         editNarative(id: ID!): Narative
     }
 `;

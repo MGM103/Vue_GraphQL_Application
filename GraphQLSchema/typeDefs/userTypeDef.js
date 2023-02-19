@@ -1,4 +1,6 @@
-export default `#graphql
+import gql from 'graphql-tag';
+
+export default gql`
     type User {
         id: ID!,
         username: String,
@@ -14,12 +16,14 @@ export default `#graphql
 
     input UserInput {
         id: ID!,
-        username: String
+        username: String,
+        password: String
     } 
 
     type Mutation {
         createUser(user: UserInput!): User!
         deleteUser(user: UserInput!): Boolean
         changePassword(id: ID!, password: String!): Boolean
+        # addFramework(id: ID!, narative: FrameworkInput): User
     }
 `;

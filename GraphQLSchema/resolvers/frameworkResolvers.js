@@ -16,6 +16,9 @@ const frameworkResolvers = {
         async deleteFramework(_, { framework }){
             const result = await Framework.deleteOne({ _id: framework.id });
             return result.ok === 1;
+        },
+        async editFramework(_, { framework }) {
+            return await Framework.updateOne({id: framework.id}, { framework });
         }
     }
 }

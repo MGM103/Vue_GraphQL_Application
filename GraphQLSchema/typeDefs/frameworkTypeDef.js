@@ -1,4 +1,6 @@
-export default `#graphql
+import gql from 'graphql-tag';
+
+const frameworkQuery = gql`
     type Framework {
         id: ID!,
         protocol: String,
@@ -19,11 +21,20 @@ export default `#graphql
 
     input FrameworkInput {
         id: ID!,
-        protocol: String
+        protocol: String!,
+        competitors: [String],
+        thesis: String,
+        bullcase: String,
+        bearcase: String,
+        acquisitionStrat: String,
+        exitConditions: String
     } 
 
     type Mutation {
         createFramework(framework: FrameworkInput!): Framework!
         deleteFramework(framework: FrameworkInput!): Boolean!
+        editFramework(framework: FrameworkInput!): Framework!
     }
 `;
+
+export default frameworkQuery;
