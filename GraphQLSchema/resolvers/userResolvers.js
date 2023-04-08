@@ -3,7 +3,8 @@ import User from '../../models/User.js';
 const userResolvers = {
   Query: {
     async getUserFrameworks(_, { id }) { 
-      return await User.findFramework(id);
+      const result = await User.findById(id);
+      return result.frameworks;
     },
     async getUserById(_, { id }) {
       return await User.findById(id);
@@ -20,12 +21,21 @@ const userResolvers = {
     },
     changePassword: async (_, { id, password }) => {
       const result = await User.updateOne({ _id: id }, { password });
-      return result.ok === 1;
+      return result.modifiedCount === 1;
     },
-    //addFramework: async (_, {})
-  },
-  User: {
-    frameworks: (parent) => User.findFramework(parent.id)
+    addFramework: async (_, {id, framework}) => {
+      const userData = await User.findById(id);
+      let frameworks = userData.frameworks;
+
+      if(frameworks.includes(framework)){
+        return frameworks;
+      }
+
+      frameworks.push(framework);
+      const result = await User.updateOne({_id: id}, {frameworks});
+
+      return frameworks;
+    }
   }
 };
 

@@ -5,11 +5,11 @@ export default gql`
         id: ID!,
         username: String,
         password: String,
-        frameworks: [Framework]
+        frameworks: [String]
     }
 
     type Query {
-        getUserFrameworks(id: ID!): [Framework],
+        getUserFrameworks(id: ID!): [String],
         getUserById(id: ID!): User,
         getUserByName(name: String!): User
     }
@@ -17,13 +17,14 @@ export default gql`
     input UserInput {
         id: ID!,
         username: String,
-        password: String
+        password: String,
+        frameworks: [String]
     } 
 
     type Mutation {
         createUser(user: UserInput!): User!
-        deleteUser(user: UserInput!): Boolean
-        changePassword(id: ID!, password: String!): Boolean
-        # addFramework(id: ID!, narative: FrameworkInput): User
+        deleteUser(id: ID!): Boolean!
+        changePassword(id: ID!, password: String!): Boolean!
+        addFramework(id: ID!, framework: String!): [String]!
     }
 `;

@@ -3,20 +3,18 @@ import gql from 'graphql-tag';
 const frameworkQuery = gql`
     type Framework {
         id: ID!,
-        protocol: String,
-        naratives: [Narative],
+        protocol: String!,
         competitors: [String],
         thesis: String,
         bullcase: String,
         bearcase: String,
         acquisitionStrat: String,
         exitConditions: String,
-        user: User!
+        user: String!
     }
 
     type Query {
-        getFramework(id: ID!): Framework,
-        getFrameworksByProtocol(protocol: String!): [Framework]
+        getFramework(id: ID!): Framework
     }
 
     input FrameworkInput {
@@ -27,12 +25,13 @@ const frameworkQuery = gql`
         bullcase: String,
         bearcase: String,
         acquisitionStrat: String,
-        exitConditions: String
+        exitConditions: String,
+        user: String!
     } 
 
     type Mutation {
         createFramework(framework: FrameworkInput!): Framework!
-        deleteFramework(framework: FrameworkInput!): Boolean!
+        deleteFramework(id: ID!): Boolean!
         editFramework(framework: FrameworkInput!): Framework!
     }
 `;

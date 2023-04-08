@@ -7,24 +7,18 @@ const narativeResolvers = {
     },
     async getNarativeById(_, { id }) {
         return await Narative.findById(id);
-    },
-    async getNarativeFrameworks(_, { name }) {
-        return await Narative.find({ name: name }).exec();
     }
   },
   Mutation: {
     createNarative: (_, { narative }) => Narative.create(narative),
-    deleteUser: async (_, { narative }) => {
-      const result = await Narative.deleteOne({ _id: narative.id });
+    deleteUser: async (_, { id }) => {
+      const result = await Narative.deleteOne({ _id: id });
       return result.ok === 1;
     },
     editNarative: async (_, { narative }) => {
       const result = await Narative.updateOne({ _id: id }, { narative });
       return result.ok === 1;
     }
-  },
-  Narative: {
-    frameworks: (parent) => Narative.findFramework(parent.id)
   }
 };
 

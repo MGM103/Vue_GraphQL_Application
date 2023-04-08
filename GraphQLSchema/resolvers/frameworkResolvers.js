@@ -4,17 +4,14 @@ const frameworkResolvers = {
     Query: {
         async getFramework(_, { id }){ 
             return await Framework.findById(id);
-        },
-        async getFrameworksByProtocol(_, { protocol }) {
-            return await Framework.find({protocol: protocol}).exec();
         }
     },
     Mutation: {
         async createFramework(_, {framework}) {
             return await Framework.create(framework)
         },
-        async deleteFramework(_, { framework }){
-            const result = await Framework.deleteOne({ _id: framework.id });
+        async deleteFramework(_, { id }){
+            const result = await Framework.deleteOne({ _id: id });
             return result.ok === 1;
         },
         async editFramework(_, { framework }) {
