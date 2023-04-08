@@ -1,4 +1,5 @@
-import Narative from '../../models/Narative.js'
+import Narative from '../../models/Narative.js';
+import Framework from '../../models/Framework.js';
 
 const narativeResolvers = {
   Query: {
@@ -13,7 +14,11 @@ const narativeResolvers = {
     createNarative: (_, { narative }) => Narative.create(narative),
     deleteUser: async (_, { id }) => {
       const result = await Narative.deleteOne({ _id: id });
-      return result.ok === 1;
+      // await Framework.updateMany(
+      //   {naratives: {$in: [id]}},
+      //   {$pull: {naratives}}
+      // );
+      return result.deletedCount === 1;
     },
     editNarative: async (_, { narative }) => {
       const result = await Narative.updateOne({ _id: id }, { narative });

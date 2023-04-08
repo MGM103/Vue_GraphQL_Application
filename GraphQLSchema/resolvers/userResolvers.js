@@ -17,7 +17,7 @@ const userResolvers = {
     createUser: (_, { user }) => User.create(user),
     deleteUser: async (_, { user }) => {
       const result = await User.deleteOne({ _id: user.id });
-      return result.ok === 1;
+      return result.modifiedCount === 1;
     },
     changePassword: async (_, { id, password }) => {
       const result = await User.updateOne({ _id: id }, { password });
