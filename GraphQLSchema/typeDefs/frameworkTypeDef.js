@@ -11,6 +11,7 @@ const frameworkQuery = gql`
         acquisitionStrat: String,
         exitConditions: String,
         user: String!
+        naratives: [ID]
     }
 
     type Query {
@@ -27,12 +28,14 @@ const frameworkQuery = gql`
         acquisitionStrat: String,
         exitConditions: String,
         user: String!
+        naratives: [ID]
     } 
 
     type Mutation {
         createFramework(framework: FrameworkInput!): Framework!
         deleteFramework(id: ID!): Boolean!
         editFramework(framework: FrameworkInput!): Framework!
+        addFrameworkNarative(id: ID!, narative: ID!): [ID]!
     }
 `;
 

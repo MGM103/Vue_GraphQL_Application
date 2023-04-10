@@ -22,6 +22,21 @@ const frameworkResolvers = {
         },
         async editFramework(_, { framework }) {
             return await Framework.updateOne({id: framework.id}, { framework });
+        },
+        async addFrameworkNarative(_, {id, narative}) {
+            console.log(id, narative);
+            const frameworkData = await Framework.findById(id);
+            console.log(frameworkData);
+            let naratives = frameworkData.naratives;
+
+            if(naratives.includes(narative)){
+                return naratives;
+            }
+
+            naratives.push(narative);
+            const result = await Framework.updateOne({_id: id}, {naratives});
+            console.log(result);
+            return naratives;
         }
     }
 }

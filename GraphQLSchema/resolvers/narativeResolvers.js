@@ -12,13 +12,15 @@ const narativeResolvers = {
   },
   Mutation: {
     createNarative: (_, { narative }) => Narative.create(narative),
-    deleteUser: async (_, { id }) => {
-      const result = await Narative.deleteOne({ _id: id });
-      // await Framework.updateMany(
-      //   {naratives: {$in: [id]}},
-      //   {$pull: {naratives}}
-      // );
-      return result.deletedCount === 1;
+    deleteNarative: async (_, { id }) => {
+      const deleteNarative = await Narative.deleteOne({ _id: id });
+
+      await Framework.updateMany(
+        {naratives: {$in: [id]}},
+        {$pull: {naratives: id}}
+      );
+
+      return deleteNarative.deletedCount === 1;
     },
     editNarative: async (_, { narative }) => {
       const result = await Narative.updateOne({ _id: id }, { narative });
