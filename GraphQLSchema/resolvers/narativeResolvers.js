@@ -22,9 +22,18 @@ const narativeResolvers = {
 
       return deleteNarative.deletedCount === 1;
     },
-    editNarative: async (_, { narative }) => {
-      const result = await Narative.updateOne({ _id: id }, { narative });
-      return result.ok === 1;
+    editNarative: async (_, { id, newNarative }) => {
+      const narative = await Narative.findById(id);
+
+      Object.entries(newNarative).forEach(([key, value]) => {
+        if(value !== ""){
+          narative[key] = value;
+        }
+      });
+
+      await narative.save();
+
+      return narative;
     }
   }
 };

@@ -21,6 +21,6 @@ export default gql`
     type Mutation {
         createNarative(narative: NarativeInput!): Narative!
         deleteNarative(id: ID!): Boolean!
-        editNarative(narative: NarativeInput!): Narative!
+        editNarative(id: ID!, newNarative: NarativeInput!): Narative!
     }
 `;

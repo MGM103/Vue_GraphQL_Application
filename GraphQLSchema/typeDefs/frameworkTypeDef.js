@@ -29,12 +29,12 @@ const frameworkQuery = gql`
         exitConditions: String,
         user: String!
         naratives: [ID]
-    } 
+    }
 
     type Mutation {
         createFramework(framework: FrameworkInput!): Framework!
         deleteFramework(id: ID!): Boolean!
-        editFramework(framework: FrameworkInput!): Framework!
+        editFramework(id:ID!, newFramework: FrameworkInput!): Framework!
         addFrameworkNarative(id: ID!, narative: ID!): [ID]!
     }
 `;

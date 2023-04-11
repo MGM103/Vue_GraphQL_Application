@@ -20,8 +20,18 @@ const frameworkResolvers = {
             console.log(result);
             return result.deletedCount === 1;
         },
-        async editFramework(_, { framework }) {
-            return await Framework.updateOne({id: framework.id}, { framework });
+        async editFramework(_, { id, newFramework }) {
+            const framework = await Framework.findById(id);
+
+            Object.entries(newFramework).forEach(([key, value]) => {
+                if(value !== ""){
+                    framework[key] = value;
+                };
+            });
+
+            await framework.save();
+
+            return framework;
         },
         async addFrameworkNarative(_, {id, narative}) {
             console.log(id, narative);
