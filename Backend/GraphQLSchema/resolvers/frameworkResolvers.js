@@ -1,5 +1,5 @@
-import Framework from '../../models/Framework.js';
-import User from '../../models/User.js';
+import Framework from '../../Models/Framework.js';
+import User from '../../Models/User.js';
 
 const frameworkResolvers = {
     Query: {

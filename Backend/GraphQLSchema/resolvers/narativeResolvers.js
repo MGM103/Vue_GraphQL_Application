@@ -1,5 +1,5 @@
-import Narative from '../../models/Narative.js';
-import Framework from '../../models/Framework.js';
+import Narative from '../../Models/Narative.js';
+import Framework from '../../Models/Framework.js';
 
 const narativeResolvers = {
   Query: {
