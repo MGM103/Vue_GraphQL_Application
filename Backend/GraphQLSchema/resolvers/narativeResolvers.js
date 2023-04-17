@@ -6,8 +6,8 @@ const narativeResolvers = {
     async getNarativeByName(_, { name }) {
         return await Narative.findOne({name: name});
     },
-    async getNarativeById(_, { id }) {
-        return await Narative.findById(id);
+    async getNarativeById(_, { _id }) {
+        return await Narative.findById(_id);
     }
   },
   Mutation: {
