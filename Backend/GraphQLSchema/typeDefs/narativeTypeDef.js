@@ -1,26 +1,26 @@
 import gql from 'graphql-tag';
 
 export default gql`
-    type Narative {
-        id: ID!,
-        name: String!,
-        description: String
-    }
+  type Narative {
+    _id: ID!,
+    name: String!,
+    description: String
+  }
 
-    type Query {
-        getNarativeByName(name: String!): Narative,
-        getNarativeById(id: ID!): Narative,
-    }
+  type Query {
+    getNarativeByName(name: String!): Narative,
+    getNarativeById(_id: ID!): Narative,
+  }
 
-    input NarativeInput {
-        id: ID!,
-        name: String!,
-        description: String
-    } 
+  input NarativeInput {
+    _id: ID!,
+    name: String!,
+    description: String
+  } 
 
-    type Mutation {
-        createNarative(narative: NarativeInput!): Narative!
-        deleteNarative(id: ID!): Boolean!
-        editNarative(id: ID!, newNarative: NarativeInput!): Narative!
-    }
+  type Mutation {
+    createNarative(narative: NarativeInput!): Narative!
+    deleteNarative(_id: ID!): Boolean!
+    editNarative(i_d: ID!, newNarative: NarativeInput!): Narative!
+  }
 `;
