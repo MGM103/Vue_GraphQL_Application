@@ -3,8 +3,8 @@ import User from '../../Models/User.js';
 
 const frameworkResolvers = {
     Query: {
-        async getFramework(_, { id }){ 
-            return await Framework.findById(id);
+        async getFrameworkById(_, { _id }){ 
+            return await Framework.findById(_id);
         }
     },
     Mutation: {

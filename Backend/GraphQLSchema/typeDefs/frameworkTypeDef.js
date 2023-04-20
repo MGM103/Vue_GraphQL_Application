@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 
 const frameworkQuery = gql`
     type Framework {
-        id: ID!,
+        _id: ID!,
         protocol: String!,
         competitors: [String],
         thesis: String,
@@ -15,11 +15,11 @@ const frameworkQuery = gql`
     }
 
     type Query {
-        getFramework(id: ID!): Framework
+        getFrameworkById(_id: ID!): Framework
     }
 
     input FrameworkInput {
-        id: ID!,
+        _id: ID!,
         protocol: String!,
         competitors: [String],
         thesis: String,
@@ -33,8 +33,8 @@ const frameworkQuery = gql`
 
     type Mutation {
         createFramework(framework: FrameworkInput!): Framework!
-        deleteFramework(id: ID!): Boolean!
-        editFramework(id:ID!, newFramework: FrameworkInput!): Framework!
+        deleteFramework(_id: ID!): Boolean!
+        editFramework(_id:ID!, newFramework: FrameworkInput!): Framework!
         addFrameworkNarative(id: ID!, narative: ID!): [ID]!
     }
 `;
