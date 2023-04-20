@@ -2,12 +2,12 @@ import User from '../../Models/User.js';
 
 const userResolvers = {
   Query: {
-    async getUserFrameworks(_, { id }) { 
-      const result = await User.findById(id);
+    async getUserFrameworks(_, { _id }) { 
+      const result = await User.findById(_id);
       return result.frameworks;
     },
-    async getUserById(_, { id }) {
-      return await User.findById(id);
+    async getUserById(_, { _id }) {
+      return await User.findById(_id);
     },
     async getUserByName(_, { name }){
       return await User.findOne({ username: name });

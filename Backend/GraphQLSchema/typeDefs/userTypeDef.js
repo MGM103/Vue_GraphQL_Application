@@ -2,20 +2,20 @@ import gql from 'graphql-tag';
 
 export default gql`
     type User {
-        id: ID!,
+        _id: ID!,
         username: String,
         password: String,
         frameworks: [ID]
     }
 
     type Query {
-        getUserFrameworks(id: ID!): [String],
-        getUserById(id: ID!): User,
+        getUserFrameworks(_id: ID!): [String],
+        getUserById(_id: ID!): User,
         getUserByName(name: String!): User
     }
 
     input UserInput {
-        id: ID!,
+        _id: ID!,
         username: String,
         password: String,
         frameworks: [ID]
@@ -23,8 +23,8 @@ export default gql`
 
     type Mutation {
         createUser(user: UserInput!): User!
-        deleteUser(id: ID!): Boolean!
-        changePassword(id: ID!, password: String!): Boolean!
-        addFramework(id: ID!, framework: ID!): [ID]!
+        deleteUser(_id: ID!): Boolean!
+        changePassword(_id: ID!, password: String!): Boolean!
+        addFramework(_id: ID!, framework: ID!): [ID]!
     }
 `;

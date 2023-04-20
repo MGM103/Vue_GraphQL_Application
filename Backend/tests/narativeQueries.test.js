@@ -5,29 +5,28 @@ import { graphql } from "graphql";
 import resolver from '../GraphQLSchema/resolvers/resolvers';
 import typeDef from '../GraphQLSchema/typeDefs/typeDefs';
 
-// global test mongodb instance
-let database;
-let schema;
-const mockNarative = {
-  name: "NFT-Fi",
-  description: "Unlocking the economic power of notable NFT collections by providing lending, CDPs, perps, etc."
-};
-
-// Create & connect to test instance of mongodb
-// Then add mock data
-// Then create schema
-beforeAll(async () => {
+describe("Test Narative Queries", () => {
+  // global test mongodb instance
+  let database;
+  let schema;
+  const mockNarative = {
+    name: "NFT-Fi",
+    description: "Unlocking the economic power of notable NFT collections by providing lending, CDPs, perps, etc."
+  };
+  
+  // Create & connect to test instance of mongodb
+  // Then add mock data & create schema
+  beforeAll(async () => {
     database = await initTestDb();
     await database.collection('naratives').insertOne(mockNarative);
     schema = makeExecutableSchema({typeDefs: typeDef, resolvers: resolver});
-});
+  });
 
-// Destroy test instance of mongodb
-afterAll(async () => {
+  // Destroy test instance of mongodb
+  afterAll(async () => {
     await shutDownTestDb();
-});
+  });
 
-describe("Narative GraphQL tests", () => {
   test("Get Narative by name", async () => {
     // create graphql query
     const queryVars = {name: mockNarative.name};
@@ -72,8 +71,6 @@ describe("Narative GraphQL tests", () => {
       contextValue: { database },
       variableValues: queryVars
     });
-
-    console.log(JSON.stringify(result));
     
     expect(result.data.getNarativeById.name).toEqual(mockNarative.name);
     expect(result.data.getNarativeById.description).toEqual(mockNarative.description);
