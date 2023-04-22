@@ -15,16 +15,16 @@ const userResolvers = {
   },
   Mutation: {
     createUser: (_, { user }) => User.create(user),
-    deleteUser: async (_, { user }) => {
-      const result = await User.deleteOne({ _id: user.id });
+    deleteUser: async (_, { _id }) => {
+      const result = await User.deleteOne({ _id });
+      return result.deletedCount === 1;
+    },
+    changePassword: async (_, { _id, password }) => {
+      const result = await User.updateOne({ _id }, { password });
       return result.modifiedCount === 1;
     },
-    changePassword: async (_, { id, password }) => {
-      const result = await User.updateOne({ _id: id }, { password });
-      return result.modifiedCount === 1;
-    },
-    addFramework: async (_, {id, framework}) => {
-      const userData = await User.findById(id);
+    addFramework: async (_, { _id, framework }) => {
+      const userData = await User.findById(_id);
       let frameworks = userData.frameworks;
 
       if(frameworks.includes(framework)){
@@ -32,7 +32,7 @@ const userResolvers = {
       }
 
       frameworks.push(framework);
-      const result = await User.updateOne({_id: id}, {frameworks});
+      const result = await User.updateOne({_id}, {frameworks});
 
       return frameworks;
     }

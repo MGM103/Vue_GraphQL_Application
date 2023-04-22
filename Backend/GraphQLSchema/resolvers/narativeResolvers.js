@@ -20,7 +20,6 @@ const narativeResolvers = {
         {$pull: {naratives: _id}}
       );
 
-      console.log(JSON.stringify(deleteNarative));
       return deleteNarative.deletedCount === 1;
     },
     editNarative: async (_, { _id, newNarative }) => {

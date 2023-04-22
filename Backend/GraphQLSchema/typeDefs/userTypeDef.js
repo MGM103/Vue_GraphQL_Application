@@ -3,8 +3,8 @@ import gql from 'graphql-tag';
 export default gql`
     type User {
         _id: ID!,
-        username: String,
-        password: String,
+        username: String!,
+        password: String!,
         frameworks: [ID]
     }
 
@@ -15,9 +15,9 @@ export default gql`
     }
 
     input UserInput {
-        _id: ID!,
-        username: String,
-        password: String,
+        _id: ID,
+        username: String!,
+        password: String!,
         frameworks: [ID]
     } 
 
