@@ -62,8 +62,6 @@ describe("Test Framework Queries", () => {
       variableValues: queryVars
     });
 
-    console.log(JSON.stringify(result.data));
-
     expect(result.data.getFrameworkById._id).toEqual(mockFramework._id.toString());
     expect(result.data.getFrameworkById.protocol).toEqual(mockFramework.protocol);
     expect(result.data.getFrameworkById.thesis).toEqual(mockFramework.thesis);

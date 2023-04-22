@@ -12,18 +12,19 @@ const narativeResolvers = {
   },
   Mutation: {
     createNarative: (_, { narative }) => Narative.create(narative),
-    deleteNarative: async (_, { id }) => {
-      const deleteNarative = await Narative.deleteOne({ _id: id });
+    deleteNarative: async (_, { _id }) => {
+      const deleteNarative = await Narative.deleteOne({ _id });
 
       await Framework.updateMany(
-        {naratives: {$in: [id]}},
-        {$pull: {naratives: id}}
+        {naratives: {$in: [_id]}},
+        {$pull: {naratives: _id}}
       );
 
+      console.log(JSON.stringify(deleteNarative));
       return deleteNarative.deletedCount === 1;
     },
-    editNarative: async (_, { id, newNarative }) => {
-      const narative = await Narative.findById(id);
+    editNarative: async (_, { _id, newNarative }) => {
+      const narative = await Narative.findById(_id);
 
       Object.entries(newNarative).forEach(([key, value]) => {
         if(value !== ""){

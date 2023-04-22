@@ -13,7 +13,7 @@ export default gql`
   }
 
   input NarativeInput {
-    _id: ID!,
+    _id: ID,
     name: String!,
     description: String
   } 
