@@ -9,22 +9,22 @@ const frameworkResolvers = {
     },
     Mutation: {
         async createFramework(_, {framework}) {
-            return await Framework.create(framework)
+            return await Framework.create(framework);
         },
-        async deleteFramework(_, { id }){
-            const result = await Framework.deleteOne({_id: id});
+        async deleteFramework(_, { _id }){
+            const result = await Framework.deleteOne({_id });
             await User.updateMany(
-                {frameworks: {$in: [id]}},
-                {$pull: {frameworks: id}}
+                {frameworks: {$in: [_id]}},
+                {$pull: {frameworks: _id}}
             );
-            console.log(result);
+
             return result.deletedCount === 1;
         },
-        async editFramework(_, { id, newFramework }) {
-            const framework = await Framework.findById(id);
+        async editFramework(_, { _id, newFramework }) {
+            const framework = await Framework.findById(_id);
 
             Object.entries(newFramework).forEach(([key, value]) => {
-                if(value !== ""){
+                if(value){
                     framework[key] = value;
                 };
             });
@@ -33,10 +33,8 @@ const frameworkResolvers = {
 
             return framework;
         },
-        async addFrameworkNarative(_, {id, narative}) {
-            console.log(id, narative);
-            const frameworkData = await Framework.findById(id);
-            console.log(frameworkData);
+        async addFrameworkNarative(_, {_id, narative}) {
+            const frameworkData = await Framework.findById(_id);
             let naratives = frameworkData.naratives;
 
             if(naratives.includes(narative)){
@@ -44,8 +42,8 @@ const frameworkResolvers = {
             }
 
             naratives.push(narative);
-            const result = await Framework.updateOne({_id: id}, {naratives});
-            console.log(result);
+            const result = await Framework.updateOne({ _id }, { naratives });
+
             return naratives;
         }
     }

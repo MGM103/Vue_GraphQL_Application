@@ -19,7 +19,7 @@ const frameworkQuery = gql`
     }
 
     input FrameworkInput {
-        _id: ID!,
+        _id: ID,
         protocol: String!,
         competitors: [String],
         thesis: String,
@@ -35,7 +35,7 @@ const frameworkQuery = gql`
         createFramework(framework: FrameworkInput!): Framework!
         deleteFramework(_id: ID!): Boolean!
         editFramework(_id:ID!, newFramework: FrameworkInput!): Framework!
-        addFrameworkNarative(id: ID!, narative: ID!): [ID]!
+        addFrameworkNarative(_id: ID!, narative: ID!): [ID]!
     }
 `;
 
