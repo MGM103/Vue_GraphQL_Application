@@ -20,7 +20,7 @@ describe("Test Narative Queries", () => {
     bearcase: "This product is too complex for the average user it never gains traction. Alternatively one of the competitors takes most of the market share",
     acquisitionStrat: "DCA sub 45 cents",
     exitConditions: "Exploit or the number of users using interest rate swaps on competitors grows faster for at a sustained period (3 months) period",
-    user: "6433e23d447b87fd52a6c805"
+    user: "6433e23d447b87fd52a6c805" 
   };
 
   // Create & connect to test instance of mongodb
