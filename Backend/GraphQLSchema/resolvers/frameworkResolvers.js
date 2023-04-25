@@ -4,7 +4,17 @@ import User from "../../Models/User.js";
 const frameworkResolvers = {
   Query: {
     async getFrameworkById(_, { _id }) {
-      return await Framework.findById(_id);
+      try {
+        const result = await Framework.findById(_id);
+
+        if (!result) {
+          throw new Error(`Framework with id: ${_id}, could not be found.`);
+        }
+
+        return result;
+      } catch (error) {
+        throw new Error(`Query getFrameworkById failed: ${error.message}`);
+      }
     },
   },
   Mutation: {
