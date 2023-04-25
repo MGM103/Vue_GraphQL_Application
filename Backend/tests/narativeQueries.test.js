@@ -28,7 +28,7 @@ describe("Test Narative Queries", () => {
     await shutDownTestDb();
   });
 
-  test("Get Narative by name", async () => {
+  test("Test get Narative by name", async () => {
     // create graphql query
     const queryVars = { name: mockNarative.name };
     const query = gql`
@@ -58,7 +58,7 @@ describe("Test Narative Queries", () => {
     );
   });
 
-  test("Get Narative by Name error", async () => {
+  test("Test get Narative by Name error cases", async () => {
     const queryVars = { name: "ForkDAO" };
     const query = gql`
       query testGetNarativeByName($name: String!) {
@@ -83,7 +83,7 @@ describe("Test Narative Queries", () => {
     );
   });
 
-  test("Get Narative by id", async () => {
+  test("Test get Narative by id", async () => {
     const queryVars = { id: mockNarative._id.toString() };
     const query = gql`
       query testGetNarativeById($id: ID!) {
@@ -111,7 +111,7 @@ describe("Test Narative Queries", () => {
     );
   });
 
-  test("Get Narative by id", async () => {
+  test("Test get Narative by id error cases", async () => {
     const queryVars = { id: "6433e4b3447b87fd52a6c80c" };
     const query = gql`
       query testGetNarativeById($id: ID!) {
