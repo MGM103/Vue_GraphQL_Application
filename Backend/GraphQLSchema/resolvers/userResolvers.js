@@ -45,27 +45,46 @@ const userResolvers = {
     },
   },
   Mutation: {
-    createUser: (_, { user }) => User.create(user),
+    createUser: (_, { user }) => {
+      try {
+        const result = User.create(user);
+        return result;
+      } catch (error) {
+        throw new Error(`Mutation createUser failed: ${error.message}`);
+      }
+    },
     deleteUser: async (_, { _id }) => {
-      const result = await User.deleteOne({ _id });
-      return result.deletedCount === 1;
+      try {
+        const result = await User.deleteOne({ _id });
+        return result.deletedCount === 1;
+      } catch (error) {
+        throw new Error(`Mutation deleteUser failed: ${error.message}`);
+      }
     },
     changePassword: async (_, { _id, password }) => {
-      const result = await User.updateOne({ _id }, { password });
-      return result.modifiedCount === 1;
+      try {
+        const result = await User.updateOne({ _id }, { password });
+        return result.modifiedCount === 1;
+      } catch (error) {
+        throw new Error(`Mutation changePassword failed: ${error.message}`);
+      }
     },
     addFramework: async (_, { _id, framework }) => {
-      const userData = await User.findById(_id);
-      let frameworks = userData.frameworks;
+      try {
+        const userData = await User.findById(_id);
+        let frameworks = userData.frameworks;
 
-      if (frameworks.includes(framework)) {
+        if (frameworks.includes(framework)) {
+          return frameworks;
+        }
+
+        frameworks.push(framework);
+        const result = await User.updateOne({ _id }, { frameworks });
+
         return frameworks;
+      } catch (error) {
+        throw new Error(`Mutation addFramework failed: ${error.message}`);
       }
-
-      frameworks.push(framework);
-      const result = await User.updateOne({ _id }, { frameworks });
-
-      return frameworks;
     },
   },
 };

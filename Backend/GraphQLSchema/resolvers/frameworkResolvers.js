@@ -19,42 +19,61 @@ const frameworkResolvers = {
   },
   Mutation: {
     async createFramework(_, { framework }) {
-      return await Framework.create(framework);
+      try {
+        const result = await Framework.create(framework);
+        return result;
+      } catch (error) {
+        throw new Error(`Mutation createFramework failed: ${error.message}`);
+      }
     },
     async deleteFramework(_, { _id }) {
-      const result = await Framework.deleteOne({ _id });
-      await User.updateMany(
-        { frameworks: { $in: [_id] } },
-        { $pull: { frameworks: _id } }
-      );
+      try {
+        const result = await Framework.deleteOne({ _id });
+        await User.updateMany(
+          { frameworks: { $in: [_id] } },
+          { $pull: { frameworks: _id } }
+        );
 
-      return result.deletedCount === 1;
+        return result.deletedCount === 1;
+      } catch (error) {
+        throw new Error(`Mutation deleteFramework failed: ${error.message}`);
+      }
     },
     async editFramework(_, { _id, newFramework }) {
-      const framework = await Framework.findById(_id);
+      try {
+        const framework = await Framework.findById(_id);
 
-      Object.entries(newFramework).forEach(([key, value]) => {
-        if (value) {
-          framework[key] = value;
-        }
-      });
+        Object.entries(newFramework).forEach(([key, value]) => {
+          if (value) {
+            framework[key] = value;
+          }
+        });
 
-      await framework.save();
+        await framework.save();
 
-      return framework;
+        return framework;
+      } catch (error) {
+        throw new Error(`Mutation editFramework failed: ${error.message}`);
+      }
     },
     async addFrameworkNarative(_, { _id, narative }) {
-      const frameworkData = await Framework.findById(_id);
-      let naratives = frameworkData.naratives;
+      try {
+        const frameworkData = await Framework.findById(_id);
+        let naratives = frameworkData.naratives;
 
-      if (naratives.includes(narative)) {
+        if (naratives.includes(narative)) {
+          return naratives;
+        }
+
+        naratives.push(narative);
+        const result = await Framework.updateOne({ _id }, { naratives });
+
         return naratives;
+      } catch (error) {
+        throw new Error(
+          `Mutation addFrameworkNarative failed: ${error.message}`
+        );
       }
-
-      naratives.push(narative);
-      const result = await Framework.updateOne({ _id }, { naratives });
-
-      return naratives;
     },
   },
 };

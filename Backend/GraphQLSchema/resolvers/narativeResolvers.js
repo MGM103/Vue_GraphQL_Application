@@ -31,29 +31,44 @@ const narativeResolvers = {
     },
   },
   Mutation: {
-    createNarative: (_, { narative }) => Narative.create(narative),
+    createNarative: (_, { narative }) => {
+      try {
+        const result = Narative.create(narative);
+        return result;
+      } catch (error) {
+        throw new Error(`Mutation createNarative failed: ${error.message}`);
+      }
+    },
     deleteNarative: async (_, { _id }) => {
-      const deleteNarative = await Narative.deleteOne({ _id });
+      try {
+        const deleteNarative = await Narative.deleteOne({ _id });
 
-      await Framework.updateMany(
-        { naratives: { $in: [_id] } },
-        { $pull: { naratives: _id } }
-      );
+        await Framework.updateMany(
+          { naratives: { $in: [_id] } },
+          { $pull: { naratives: _id } }
+        );
 
-      return deleteNarative.deletedCount === 1;
+        return deleteNarative.deletedCount === 1;
+      } catch (error) {
+        throw new Error(`Mutation deleteNarative failed: ${error.message}`);
+      }
     },
     editNarative: async (_, { _id, newNarative }) => {
-      const narative = await Narative.findById(_id);
+      try {
+        const narative = await Narative.findById(_id);
 
-      Object.entries(newNarative).forEach(([key, value]) => {
-        if (value !== "") {
-          narative[key] = value;
-        }
-      });
+        Object.entries(newNarative).forEach(([key, value]) => {
+          if (value !== "") {
+            narative[key] = value;
+          }
+        });
 
-      await narative.save();
+        await narative.save();
 
-      return narative;
+        return narative;
+      } catch (error) {
+        console.log(`Mutation editNarative failed: ${error.message}`);
+      }
     },
   },
 };
