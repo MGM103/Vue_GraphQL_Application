@@ -57,10 +57,13 @@ nav ul li {
 button {
   border: none;
   background: rgba(46, 206, 152, 0.9);
-  padding: 4px 15px;
+  width: 100px;
+  height: 25px;
+  padding: 5px 15px;
   border-radius: 30px;
   color: whitesmoke;
   font-weight: bold;
+  box-sizing: border-box;
 
   &:hover {
     cursor: pointer;
