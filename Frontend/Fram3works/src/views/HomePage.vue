@@ -1,8 +1,11 @@
 <template>
   <div class="home">
-    <h3>Home</h3>
+    <NavBar />
+    <h1>Home</h1>
   </div>
 </template>
+
+<script></script>
 
 <style scoped>
 h3 {
