@@ -1,7 +1,9 @@
 <template>
   <div id="main-content-fram3works">
     <div class="container">
-      <NavBar />
+      <template v-if="!isLogin()">
+        <NavBar />
+      </template>
       <router-view />
     </div>
   </div>
@@ -15,6 +17,14 @@ export default {
 
   components: {
     NavBar
+  },
+
+  methods: {
+    isLogin() {
+      const isLogin = this.$route.path === '/login';
+      console.log(`Is login: ${isLogin}`);
+      return isLogin;
+    }
   }
 };
 </script>

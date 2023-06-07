@@ -13,14 +13,20 @@
   </nav>
 </template>
 
+<script>
+export default {
+  name: 'NavBar'
+};
+</script>
+
 <style lang="scss" scoped>
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding-top: 5px;
-  padding-left: 5%;
-  padding-right: 5%;
+  padding-left: 3%;
+  padding-right: 3%;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   background: rgba(39, 44, 47, 0.8);
   height: 45px;
