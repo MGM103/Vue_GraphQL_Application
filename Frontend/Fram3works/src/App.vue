@@ -1,7 +1,7 @@
 <template>
   <div id="main-content-fram3works">
     <div class="container">
-      <template v-if="!isLogin()">
+      <template v-if="!isUserCreds()">
         <NavBar />
       </template>
       <router-view />
@@ -20,9 +20,8 @@ export default {
   },
 
   methods: {
-    isLogin() {
-      const isLogin = this.$route.path === '/login';
-      console.log(`Is login: ${isLogin}`);
+    isUserCreds() {
+      const isLogin = this.$route.path === '/login' || this.$route.path === '/create_account';
       return isLogin;
     }
   }

@@ -1,6 +1,6 @@
 <template>
-  <div class="login-content">
-    <FormFieldUserCred heading="Login" submitBtn="Submit">
+  <div class="create-account-content">
+    <FormFieldUserCred heading="Create Account" submitBtn="Create">
       <template v-slot:default>
         <InputFieldUserCred
           id="username"
@@ -8,23 +8,28 @@
           inputType="text"
           placeholderText="username"
           v-model="username"
-        />
+        >
+        </InputFieldUserCred>
         <InputFieldUserCred
           id="password"
           icon="lock"
           inputType="password"
-          placeholderText="password"
+          placeholderText="new password"
           v-model="password"
-        />
-      </template>
-      <template v-slot:helperContent>
-        <div class="forgot-pwd">
-          <router-link to="#">Forgot password</router-link>
-        </div>
+        >
+        </InputFieldUserCred>
+        <InputFieldUserCred
+          id="confirmPassword"
+          icon="lock"
+          inputType="password"
+          placeholderText="confirm password"
+          v-model="confirmPassword"
+        >
+        </InputFieldUserCred>
       </template>
       <template v-slot:extraContent>
-        <div class="create-account">
-          <p>Don't have an account? <router-link to="/create_account">Sign up</router-link> now!</p>
+        <div class="sign-in">
+          <p>Already have an account? <router-link to="/login">Sign In</router-link> now!</p>
         </div>
       </template>
     </FormFieldUserCred>
@@ -32,26 +37,27 @@
 </template>
 
 <script>
-import InputFieldUserCred from '../components/InputFieldUserCred.vue';
 import FormFieldUserCred from '../components/FormFieldUserCred.vue';
+import InputFieldUserCred from '../components/InputFieldUserCred.vue';
 
 export default {
-  name: 'LoginScreen',
+  name: 'CreateAccount',
   components: {
-    InputFieldUserCred,
-    FormFieldUserCred
+    FormFieldUserCred,
+    InputFieldUserCred
   },
-  data() {
+  date() {
     return {
       username: null,
-      password: null
+      password: null,
+      confirmPassword: null
     };
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.login-content {
+.create-account-content {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -80,22 +86,7 @@ export default {
   }
 }
 
-.forgot-pwd {
-  margin-bottom: 10px;
-
-  a {
-    text-decoration: none;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.8em;
-
-    &:hover {
-      text-decoration: underline;
-      color: rgba(255, 255, 255, 0.95);
-    }
-  }
-}
-
-.create-account {
+.sign-in {
   font-size: 0.9em;
   color: rgba(255, 255, 255, 0.75);
   margin: 10px 0 5px;
