@@ -38,10 +38,6 @@ export default {
     },
     placeholderText: {
       type: String
-    },
-    value: {
-      type: String,
-      default: ''
     }
   },
   data() {
@@ -52,7 +48,7 @@ export default {
   methods: {
     input(event) {
       this.inputValue = event.target.value;
-      this.$emit('input', event.target.value);
+      this.$emit('update:modelValue', event.target.value);
     },
     hasIcon() {
       return this.icon != iconEnum.NONE;

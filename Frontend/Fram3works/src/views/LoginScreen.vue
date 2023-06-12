@@ -4,14 +4,14 @@
     <InputFieldLogin
       id="username"
       icon="mail"
-      type="text"
+      inputType="text"
       placeholderText="username"
       v-model="username"
     />
     <InputFieldLogin
       id="password"
       icon="lock"
-      type="password"
+      inputType="password"
       placeholderText="password"
       v-model="password"
     />
