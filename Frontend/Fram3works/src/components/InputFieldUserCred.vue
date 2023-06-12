@@ -23,7 +23,7 @@
 import { iconEnum } from '../enums/index';
 
 export default {
-  name: 'InputFieldLogin',
+  name: 'InputFieldUserCred',
   props: {
     id: {
       type: String

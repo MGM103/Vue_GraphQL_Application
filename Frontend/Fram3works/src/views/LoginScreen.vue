@@ -1,37 +1,45 @@
 <template>
   <div class="login-content">
-    <h1>Login</h1>
-    <InputFieldLogin
-      id="username"
-      icon="mail"
-      inputType="text"
-      placeholderText="username"
-      v-model="username"
-    />
-    <InputFieldLogin
-      id="password"
-      icon="lock"
-      inputType="password"
-      placeholderText="password"
-      v-model="password"
-    />
-    <div class="forgot-pwd">
-      <router-link to="#">Forgot password</router-link>
-    </div>
-    <button type="button">Sign in</button>
-    <div class="create-account">
-      <p>Don't have an account? <router-link to="#">Sign up</router-link> now!</p>
-    </div>
+    <FormFieldUserCred heading="Login" submitBtn="Submit">
+      <template v-slot:default>
+        <InputFieldUserCred
+          id="username"
+          icon="mail"
+          inputType="text"
+          placeholderText="username"
+          v-model="username"
+        />
+        <InputFieldUserCred
+          id="password"
+          icon="lock"
+          inputType="password"
+          placeholderText="password"
+          v-model="password"
+        />
+      </template>
+      <template v-slot:helperContent>
+        <div class="forgot-pwd">
+          <router-link to="#">Forgot password</router-link>
+        </div>
+      </template>
+      <template v-slot:extraContent>
+        <div class="create-account">
+          <p>Don't have an account? <router-link to="#">Sign up</router-link> now!</p>
+        </div>
+      </template>
+    </FormFieldUserCred>
   </div>
 </template>
 
 <script>
-import InputFieldLogin from '../components/InputFieldLogin.vue';
+import InputFieldUserCred from '../components/InputFieldUserCred.vue';
+import FormFieldUserCred from '../components/FormFieldUserCred.vue';
 
 export default {
   name: 'LoginScreen',
   components: {
-    InputFieldLogin
+    InputFieldUserCred,
+    FormFieldUserCred
   },
   data() {
     return {
