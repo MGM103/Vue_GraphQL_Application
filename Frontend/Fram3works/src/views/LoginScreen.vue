@@ -1,14 +1,20 @@
 <template>
   <div class="login-content">
     <h1>Login</h1>
-    <div class="input-field">
-      <ion-icon name="mail-outline"></ion-icon>
-      <input type="text" id="username" v-model="username" placeholder="username" />
-    </div>
-    <div class="input-field">
-      <ion-icon name="lock-closed-outline"></ion-icon>
-      <input type="password" id="password" v-model="password" placeholder="password" />
-    </div>
+    <InputFieldLogin
+      id="username"
+      icon="mail"
+      type="text"
+      placeholderText="username"
+      v-model="username"
+    />
+    <InputFieldLogin
+      id="password"
+      icon="lock"
+      type="password"
+      placeholderText="password"
+      v-model="password"
+    />
     <div class="forgot-pwd">
       <router-link to="#">Forgot password</router-link>
     </div>
@@ -20,8 +26,13 @@
 </template>
 
 <script>
+import InputFieldLogin from '../components/InputFieldLogin.vue';
+
 export default {
   name: 'LoginScreen',
+  components: {
+    InputFieldLogin
+  },
   data() {
     return {
       username: null,
@@ -58,47 +69,6 @@ export default {
     &:hover {
       background-color: rgb(0, 255, 128, 0.9);
     }
-  }
-}
-
-.input-field {
-  position: relative;
-  margin: 10px 0;
-  min-width: 300px;
-  border-bottom: 2px solid white;
-
-  label {
-    position: absolute;
-    top: 20%;
-    left: 5px;
-    pointer-events: none;
-    font-size: 1em;
-    color: whitesmoke;
-  }
-
-  input {
-    width: 100%;
-    height: 50px;
-    background: transparent;
-    border: none;
-    outline: none;
-    font-size: 1em;
-    padding: 20px 35px 0 5px;
-    color: whitesmoke;
-    position: relative;
-  }
-
-  input::placeholder {
-    color: rgba(255, 255, 255, 0.7);
-  }
-
-  ion-icon {
-    color: white;
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50);
-    font-size: 1.1em;
   }
 }
 
