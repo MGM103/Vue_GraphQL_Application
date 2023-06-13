@@ -21,8 +21,7 @@ export default {
 
   methods: {
     isUserCreds() {
-      const isLogin = this.$route.path === '/login' || this.$route.path === '/create_account';
-      return isLogin;
+      return ['/login', '/create_account', '/forgot_password'].includes(this.$route.path);
     }
   }
 };
