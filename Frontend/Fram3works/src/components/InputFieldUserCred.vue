@@ -91,6 +91,14 @@ export default {
     &:focus {
       border-bottom: 2px solid rgb(0, 255, 128, 0.65);
     }
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus {
+      -webkit-text-fill-color: #fff;
+      -webkit-background-clip: text !important;
+      font-family: Arial;
+    }
   }
 
   ion-icon {
