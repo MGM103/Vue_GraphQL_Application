@@ -8,22 +8,27 @@
         <ion-icon name="lock-closed-outline"></ion-icon>
       </template>
     </template>
-    <input
-      :id="id"
-      class="input-field"
+    <Field
+      :name="id"
       :type="inputType"
+      class="input-field"
       :placeholder="placeholderText"
-      v-model="inputValue"
       @input="input($event)"
+      :rules="ruleSet"
     />
   </div>
 </template>
 
 <script>
 import { iconEnum } from '../enums/index';
+import { Field } from 'vee-validate';
+import { string } from 'yup';
 
 export default {
   name: 'InputFieldUserCred',
+  components: {
+    Field
+  },
   props: {
     id: {
       type: String
@@ -61,6 +66,15 @@ export default {
     },
     isPassword() {
       return this.icon === iconEnum.PASSWORD;
+    },
+    ruleSet() {
+      if (this.id === 'username') {
+        const rule = string().email().required();
+        console.log(rule);
+        return rule;
+      } else {
+        return string().min(8).required();
+      }
     }
   }
 };
