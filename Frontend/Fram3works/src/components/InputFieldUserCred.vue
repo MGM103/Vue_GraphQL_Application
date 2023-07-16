@@ -45,11 +45,6 @@ export default {
       type: String
     }
   },
-  data() {
-    return {
-      inputValue: this.value
-    };
-  },
   methods: {
     input(event) {
       this.inputValue = event.target.value;
