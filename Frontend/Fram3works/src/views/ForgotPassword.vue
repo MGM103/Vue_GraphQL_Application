@@ -1,6 +1,7 @@
 <template>
   <div class="forgot-password-content">
-    <FormFieldUserCred heading="Forgot Password" submitBtn="Update">
+    <h2>Forgot Password</h2>
+    <Form id="forgot-pwd-form" @submit="onSubmit">
       <InputFieldUserCred
         id="newPassword"
         icon="lock"
@@ -15,18 +16,18 @@
         placeholderText="Confirm Password"
         v-model="confirmNewPassword"
       />
-    </FormFieldUserCred>
+    </Form>
   </div>
 </template>
 
 <script>
-import FormFieldUserCred from '../components/FormFieldUserCred.vue';
 import InputFieldUserCred from '../components/InputFieldUserCred.vue';
+import { Form } from 'vee-validate';
 
 export default {
   name: 'ForgotPassword',
   components: {
-    FormFieldUserCred,
+    Form,
     InputFieldUserCred
   },
   data() {

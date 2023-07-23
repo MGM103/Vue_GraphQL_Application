@@ -33,13 +33,11 @@
 
 <script>
 import { Form } from 'vee-validate';
-import FormFieldUserCred from '../components/FormFieldUserCred.vue';
 import InputFieldUserCred from '../components/InputFieldUserCred.vue';
 
 export default {
   name: 'CreateAccount',
   components: {
-    FormFieldUserCred,
     InputFieldUserCred,
     Form
   },

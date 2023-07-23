@@ -42,6 +42,12 @@ export default {
       email: null,
       password: null
     };
+  },
+  methods: {
+    onSubmit() {
+      console.log(`Submitted`);
+      alert(`Username ${this.email} & Password: ${this.password}`);
+    }
   }
 };
 </script>
