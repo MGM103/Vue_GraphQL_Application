@@ -1,7 +1,7 @@
 export default {
   preset: "@shelf/jest-mongodb",
-  testEnvironment: 'node',
+  testEnvironment: "node",
   transform: {
-    '^.+\\.jsx?$': 'babel-jest'
-  }
+    "^.+\\.jsx?$": "babel-jest",
+  },
 };

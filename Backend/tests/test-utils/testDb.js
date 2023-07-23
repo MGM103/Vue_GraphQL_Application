@@ -2,10 +2,10 @@ import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
 
 let mongoServer;
-const mongoOptions = { 
-  useNewUrlParser: true, 
-  useUnifiedTopology: true 
-}
+const mongoOptions = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+};
 
 export async function initTestDb() {
   mongoServer = await MongoMemoryServer.create();

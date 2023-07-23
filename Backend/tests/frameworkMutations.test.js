@@ -1,9 +1,9 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 import { initTestDb, shutDownTestDb } from "./test-utils/testDb";
-import { makeExecutableSchema } from '@graphql-tools/schema';
+import { makeExecutableSchema } from "@graphql-tools/schema";
 import { graphql } from "graphql";
-import resolver from '../GraphQLSchema/resolvers/resolvers';
-import typeDef from '../GraphQLSchema/typeDefs/typeDefs';
+import resolver from "../GraphQLSchema/resolvers/resolvers";
+import typeDef from "../GraphQLSchema/typeDefs/typeDefs";
 
 describe("Test Narative Queries", () => {
   // global test mongodb instance
@@ -16,19 +16,22 @@ describe("Test Narative Queries", () => {
     thesis: `Interest rate swaps make up the largest segment of the trillion dollar derivitives market of TradFi. 
     Additionally there are numerous interest rates provided by the explosion of LSDs and 
     interest rate swaps provide means of longing and shorting different these different products`,
-    bullcase: "The growing number of LSDs and GMX forks catalyse an interest rate swap market and pendle continues to grow",
-    bearcase: "This product is too complex for the average user it never gains traction. Alternatively one of the competitors takes most of the market share",
+    bullcase:
+      "The growing number of LSDs and GMX forks catalyse an interest rate swap market and pendle continues to grow",
+    bearcase:
+      "This product is too complex for the average user it never gains traction. Alternatively one of the competitors takes most of the market share",
     acquisitionStrat: "DCA sub 45 cents",
-    exitConditions: "Exploit or the number of users using interest rate swaps on competitors grows faster for at a sustained period (3 months) period",
-    user: "6433e23d447b87fd52a6c805" 
+    exitConditions:
+      "Exploit or the number of users using interest rate swaps on competitors grows faster for at a sustained period (3 months) period",
+    user: "6433e23d447b87fd52a6c805",
   };
 
   // Create & connect to test instance of mongodb
   // Then add mock data & create schema
   beforeAll(async () => {
     database = await initTestDb();
-    await database.collection('frameworks').insertOne(mockFramework);
-    schema = makeExecutableSchema({typeDefs: typeDef, resolvers: resolver});
+    await database.collection("frameworks").insertOne(mockFramework);
+    schema = makeExecutableSchema({ typeDefs: typeDef, resolvers: resolver });
   });
 
   // Destroy test instance of mongodb
@@ -41,28 +44,30 @@ describe("Test Narative Queries", () => {
     const mutationVars = {
       framework: {
         protocol: "Redacted",
-        thesis: "Create new novel products that have gained PMV, bribes will go up over time which this captures and they are joining the stable coin and LSD narative.",
+        thesis:
+          "Create new novel products that have gained PMV, bribes will go up over time which this captures and they are joining the stable coin and LSD narative.",
         user: "6433e23d447b87fd52a6f456",
         naratives: ["6433e4b3447b87fd52a6c80b", "6433e4b3447b87fd52b2d80b"],
         bullcase: "Dinero launch goes well, bribes continue to go up",
-        bearcase: "While the products are interesting and novel they do not capture new users as the space continues to grow, due to either competitors stealing market share or the complexity of the products themselves.",
+        bearcase:
+          "While the products are interesting and novel they do not capture new users as the space continues to grow, due to either competitors stealing market share or the complexity of the products themselves.",
         competitors: [],
         acquisitionStrat: "DCA below $250",
         exitConditions: "Exploit or stagnat user growth during next bull.",
-      }
+      },
     };
     const mutation = gql`
       mutation TestCreateFramework($framework: FrameworkInput!) {
         createFramework(framework: $framework) {
-          _id,
-          acquisitionStrat,
-          bearcase,
-          bullcase,
-          competitors,
-          exitConditions,
-          naratives,
-          protocol,
-          thesis,
+          _id
+          acquisitionStrat
+          bearcase
+          bullcase
+          competitors
+          exitConditions
+          naratives
+          protocol
+          thesis
           user
         }
       }
@@ -70,21 +75,39 @@ describe("Test Narative Queries", () => {
 
     // execute mutation
     const result = await graphql({
-      schema, 
+      schema,
       source: mutation.loc.source.body,
       contextValue: { database },
-      variableValues: mutationVars
+      variableValues: mutationVars,
     });
 
-    expect(result.data.createFramework.protocol).toEqual(mutationVars.framework.protocol);
-    expect(result.data.createFramework.user).toEqual(mutationVars.framework.user);
-    expect(result.data.createFramework.thesis).toEqual(mutationVars.framework.thesis);
-    expect(result.data.createFramework.bullcase).toEqual(mutationVars.framework.bullcase);
-    expect(result.data.createFramework.bearcase).toEqual(mutationVars.framework.bearcase);
-    expect(result.data.createFramework.acquisitionStrat).toEqual(mutationVars.framework.acquisitionStrat);
-    expect(result.data.createFramework.competitors).toEqual(mutationVars.framework.competitors);
-    expect(result.data.createFramework.exitConditions).toEqual(mutationVars.framework.exitConditions);
-    expect(result.data.createFramework.naratives).toEqual(mutationVars.framework.naratives);
+    expect(result.data.createFramework.protocol).toEqual(
+      mutationVars.framework.protocol
+    );
+    expect(result.data.createFramework.user).toEqual(
+      mutationVars.framework.user
+    );
+    expect(result.data.createFramework.thesis).toEqual(
+      mutationVars.framework.thesis
+    );
+    expect(result.data.createFramework.bullcase).toEqual(
+      mutationVars.framework.bullcase
+    );
+    expect(result.data.createFramework.bearcase).toEqual(
+      mutationVars.framework.bearcase
+    );
+    expect(result.data.createFramework.acquisitionStrat).toEqual(
+      mutationVars.framework.acquisitionStrat
+    );
+    expect(result.data.createFramework.competitors).toEqual(
+      mutationVars.framework.competitors
+    );
+    expect(result.data.createFramework.exitConditions).toEqual(
+      mutationVars.framework.exitConditions
+    );
+    expect(result.data.createFramework.naratives).toEqual(
+      mutationVars.framework.naratives
+    );
   });
 
   test("Test edit Framework", async () => {
@@ -92,11 +115,13 @@ describe("Test Narative Queries", () => {
     const mutationVars = {
       id: mockFramework._id.toString(),
       framework: {
-        acquisitionStrat: "DCA below $250 and use yield from locked btrfly to buy more",
-        bearcase: "Dinero doesn't gain adoption and priority gas currency doesn't gain traction. Bribes don't flow to hidden hand & pirex usage diminishes.",
+        acquisitionStrat:
+          "DCA below $250 and use yield from locked btrfly to buy more",
+        bearcase:
+          "Dinero doesn't gain adoption and priority gas currency doesn't gain traction. Bribes don't flow to hidden hand & pirex usage diminishes.",
         protocol: mockFramework.protocol,
-        user: mockFramework.user
-      }
+        user: mockFramework.user,
+      },
     };
     const mutation = gql`
       mutation TestEditFramework($id: ID!, $framework: FrameworkInput!) {
@@ -116,26 +141,39 @@ describe("Test Narative Queries", () => {
 
     // Execute mutation
     const result = await graphql({
-      schema, 
+      schema,
       source: mutation.loc.source.body,
       contextValue: { database },
-      variableValues: mutationVars
+      variableValues: mutationVars,
     });
 
     expect(result.data.editFramework.protocol).toEqual(mockFramework.protocol);
     expect(result.data.editFramework.user).toEqual(mockFramework.user);
     expect(result.data.editFramework.thesis).toEqual(mockFramework.thesis);
     expect(result.data.editFramework.bullcase).toEqual(mockFramework.bullcase);
-    expect(result.data.editFramework.bearcase).toEqual(mutationVars.framework.bearcase);
-    expect(result.data.editFramework.acquisitionStrat).toEqual(mutationVars.framework.acquisitionStrat);
-    expect(result.data.editFramework.competitors).toEqual(mockFramework.competitors);
-    expect(result.data.editFramework.exitConditions).toEqual(mockFramework.exitConditions);
-    expect(result.data.editFramework.naratives).toEqual(mockFramework.naratives);
+    expect(result.data.editFramework.bearcase).toEqual(
+      mutationVars.framework.bearcase
+    );
+    expect(result.data.editFramework.acquisitionStrat).toEqual(
+      mutationVars.framework.acquisitionStrat
+    );
+    expect(result.data.editFramework.competitors).toEqual(
+      mockFramework.competitors
+    );
+    expect(result.data.editFramework.exitConditions).toEqual(
+      mockFramework.exitConditions
+    );
+    expect(result.data.editFramework.naratives).toEqual(
+      mockFramework.naratives
+    );
   });
 
   test("Test add Framework Narative", async () => {
     // Create mutation
-    const mutationVars = {frameworkId: mockFramework._id.toString(), narativeId: "6433e4b3447b87fd52a6c80c"};
+    const mutationVars = {
+      frameworkId: mockFramework._id.toString(),
+      narativeId: "6433e4b3447b87fd52a6c80c",
+    };
     const mutation = gql`
       mutation TestAddFrameworkNarative($frameworkId: ID!, $narativeId: ID!) {
         addFrameworkNarative(_id: $frameworkId, narative: $narativeId)
@@ -144,10 +182,10 @@ describe("Test Narative Queries", () => {
 
     // execute mutation
     const result = await graphql({
-      schema, 
+      schema,
       source: mutation.loc.source.body,
       contextValue: { database },
-      variableValues: mutationVars
+      variableValues: mutationVars,
     });
 
     const naratives = result.data.addFrameworkNarative;
@@ -160,10 +198,13 @@ describe("Test Narative Queries", () => {
     const mockUser = {
       username: "Y.T.",
       password: "HiroProtagonist",
-      frameworks: []
+      frameworks: [],
     };
-    await database.collection('users').insertOne(mockUser);
-    const mutationVarsUser = {id: mockUser._id.toString(), framework: mockFramework._id.toString()};
+    await database.collection("users").insertOne(mockUser);
+    const mutationVarsUser = {
+      id: mockUser._id.toString(),
+      framework: mockFramework._id.toString(),
+    };
     const mutationUser = gql`
       mutation TestAddFramework($id: ID!, $framework: ID!) {
         addFramework(_id: $id, framework: $framework)
@@ -172,14 +213,14 @@ describe("Test Narative Queries", () => {
 
     // Add mock framework to the user's frameworks
     const resultUser = await graphql({
-      schema, 
+      schema,
       source: mutationUser.loc.source.body,
       contextValue: { database },
-      variableValues: mutationVarsUser
+      variableValues: mutationVarsUser,
     });
 
     // Create deletion mutation
-    const mutationVarsDelete = {id: mockFramework._id.toString()};
+    const mutationVarsDelete = { id: mockFramework._id.toString() };
     const mutationDelete = gql`
       mutation TestDeleteFramework($id: ID!) {
         deleteFramework(_id: $id)
@@ -188,10 +229,10 @@ describe("Test Narative Queries", () => {
 
     // Execute mutation
     const resultDelete = await graphql({
-      schema, 
+      schema,
       source: mutationDelete.loc.source.body,
       contextValue: { database },
-      variableValues: mutationVarsDelete
+      variableValues: mutationVarsDelete,
     });
 
     expect(resultDelete.data.deleteFramework).toBe(true);
