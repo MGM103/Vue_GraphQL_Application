@@ -19,7 +19,7 @@
       <button>Submit</button>
     </Form>
     <div class="forgot-pwd">
-      <router-link to="#">Forgot password</router-link>
+      <router-link to="/forgot_password">Forgot password</router-link>
     </div>
     <div class="create-account">
       <p>Don't have an account? <router-link to="/create_account">Sign up</router-link> now!</p>
@@ -88,7 +88,7 @@ export default {
 }
 
 .forgot-pwd {
-  margin-bottom: 10px;
+  margin: 10px 5px;
 
   a {
     text-decoration: none;
@@ -105,7 +105,7 @@ export default {
 .create-account {
   font-size: 0.9em;
   color: rgba(255, 255, 255, 0.75);
-  margin: 10px 0 5px;
+  margin: 5px 0 5px;
 
   a {
     text-decoration: none;
