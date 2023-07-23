@@ -39,10 +39,20 @@ export default {
     },
     inputType: {
       type: String
-      // default: inputFieldTypeEnum.TEXT
     },
     placeholderText: {
       type: String
+    }
+  },
+  computed: {
+    ruleSet() {
+      if (this.id === 'username') {
+        const rule = string().email().required();
+        console.log(rule);
+        return rule;
+      } else {
+        return string().min(8).required();
+      }
     }
   },
   methods: {
@@ -61,15 +71,6 @@ export default {
     },
     isPassword() {
       return this.icon === iconEnum.PASSWORD;
-    },
-    ruleSet() {
-      if (this.id === 'username') {
-        const rule = string().email().required();
-        console.log(rule);
-        return rule;
-      } else {
-        return string().min(8).required();
-      }
     }
   }
 };

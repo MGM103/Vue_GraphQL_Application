@@ -1,49 +1,45 @@
 <template>
   <div class="login-content">
-    <FormFieldUserCred heading="Login" submitBtn="Submit">
-      <template v-slot:default>
-        <InputFieldUserCred
-          id="username"
-          icon="mail"
-          inputType="text"
-          placeholderText="username"
-          v-model="username"
-        />
-        <InputFieldUserCred
-          id="password"
-          icon="lock"
-          inputType="password"
-          placeholderText="password"
-          v-model="password"
-        />
-      </template>
-      <template v-slot:helperContent>
-        <div class="forgot-pwd">
-          <router-link to="#">Forgot password</router-link>
-        </div>
-      </template>
-      <template v-slot:extraContent>
-        <div class="create-account">
-          <p>Don't have an account? <router-link to="/create_account">Sign up</router-link> now!</p>
-        </div>
-      </template>
-    </FormFieldUserCred>
+    <Form id="login-form" @submit="onSubmit">
+      <h2>Login</h2>
+      <InputFieldUserCred
+        id="email"
+        icon="mail"
+        inputType="text"
+        placeholderText="email"
+        v-model="email"
+      />
+      <InputFieldUserCred
+        id="password"
+        icon="lock"
+        inputType="password"
+        placeholderText="password"
+        v-model="password"
+      />
+      <button>Submit</button>
+    </Form>
+    <div class="forgot-pwd">
+      <router-link to="#">Forgot password</router-link>
+    </div>
+    <div class="create-account">
+      <p>Don't have an account? <router-link to="/create_account">Sign up</router-link> now!</p>
+    </div>
   </div>
 </template>
 
 <script>
 import InputFieldUserCred from '../components/InputFieldUserCred.vue';
-import FormFieldUserCred from '../components/FormFieldUserCred.vue';
+import { Form } from 'vee-validate';
 
 export default {
   name: 'LoginScreen',
   components: {
     InputFieldUserCred,
-    FormFieldUserCred
+    Form
   },
   data() {
     return {
-      username: null,
+      email: null,
       password: null
     };
   }
@@ -61,6 +57,11 @@ export default {
 
   h1 {
     color: whitesmoke;
+  }
+
+  h2 {
+    color: whitesmoke;
+    text-align: center;
   }
 
   button {
