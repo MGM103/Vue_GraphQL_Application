@@ -1,42 +1,38 @@
 <template>
   <div class="create-account-content">
-    <FormFieldUserCred heading="Create Account" submitBtn="Create">
-      <template v-slot:default>
-        <InputFieldUserCred
-          id="username"
-          icon="mail"
-          inputType="text"
-          placeholderText="username"
-          v-model="username"
-        >
-        </InputFieldUserCred>
-        <InputFieldUserCred
-          id="password"
-          icon="lock"
-          inputType="password"
-          placeholderText="new password"
-          v-model="password"
-        >
-        </InputFieldUserCred>
-        <InputFieldUserCred
-          id="confirmPassword"
-          icon="lock"
-          inputType="password"
-          placeholderText="confirm password"
-          v-model="confirmPassword"
-        >
-        </InputFieldUserCred>
-      </template>
-      <template v-slot:extraContent>
-        <div class="sign-in">
-          <p>Already have an account? <router-link to="/login">Sign In</router-link> now!</p>
-        </div>
-      </template>
-    </FormFieldUserCred>
+    <h2>Create Account</h2>
+    <Form id="create-acc-form" @submit="onSubmit">
+      <InputFieldUserCred
+        id="email"
+        icon="mail"
+        inputType="text"
+        placeholderText="email"
+        v-model="email"
+      />
+      <InputFieldUserCred
+        id="password"
+        icon="lock"
+        inputType="password"
+        placeholderText="password"
+        v-model="password"
+      />
+      <InputFieldUserCred
+        id="confirmPassword"
+        icon="lock"
+        inputType="password"
+        placeholderText="re-enter password"
+        v-model="confirmPassword"
+      />
+      <button>Creat Account</button>
+    </Form>
+    <div class="sign-in">
+      <p>Already have an account? <router-link to="/login">Sign In</router-link> now!</p>
+    </div>
   </div>
 </template>
 
 <script>
+import { Form } from 'vee-validate';
 import FormFieldUserCred from '../components/FormFieldUserCred.vue';
 import InputFieldUserCred from '../components/InputFieldUserCred.vue';
 
@@ -44,11 +40,12 @@ export default {
   name: 'CreateAccount',
   components: {
     FormFieldUserCred,
-    InputFieldUserCred
+    InputFieldUserCred,
+    Form
   },
   date() {
     return {
-      username: null,
+      email: null,
       password: null,
       confirmPassword: null
     };
@@ -67,6 +64,11 @@ export default {
 
   h1 {
     color: whitesmoke;
+  }
+
+  h2 {
+    color: whitesmoke;
+    text-align: center;
   }
 
   button {
