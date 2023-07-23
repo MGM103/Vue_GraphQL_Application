@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "jest --config=./jest.config.js",
+    "test": "cd Backend && jest --config=./jest.config.js",
     "start": "cd Backend && nodemon index.js"
   },
   "keywords": [],
