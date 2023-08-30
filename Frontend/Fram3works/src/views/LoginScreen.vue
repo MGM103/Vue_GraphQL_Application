@@ -1,53 +1,90 @@
 <template>
   <div class="login-content">
-    <Form id="login-form" @submit="onSubmit">
-      <h2>Login</h2>
-      <InputFieldUserCred
-        id="email"
-        icon="mail"
-        inputType="text"
-        placeholderText="email"
-        v-model="email"
-      />
-      <InputFieldUserCred
-        id="password"
-        icon="lock"
-        inputType="password"
-        placeholderText="password"
-        v-model="password"
-      />
-      <button>Submit</button>
-    </Form>
+    <h2>Login</h2>
+    <InputFieldUserCred
+      id="username"
+      icon="mail"
+      inputType="text"
+      placeholderText="username"
+      v-model="username"
+    />
+    <InputFieldUserCred
+      id="password"
+      icon="lock"
+      inputType="password"
+      placeholderText="password"
+      v-model="password"
+    />
+    <button @click="getCredentials()">Submit</button>
     <div class="forgot-pwd">
       <router-link to="/forgot_password">Forgot password</router-link>
     </div>
     <div class="create-account">
       <p>Don't have an account? <router-link to="/create_account">Sign up</router-link> now!</p>
     </div>
+    <div v-if="error" class="invalid-login">
+      <p>Username and password combination incorrect, please try again.</p>
+    </div>
   </div>
 </template>
 
 <script>
+import { gql } from 'graphql-tag';
+import { ref, computed, watch } from 'vue';
+import { useLazyQuery } from '@vue/apollo-composable';
+import { useRouter } from 'vue-router';
+
+// Component imports
 import InputFieldUserCred from '../components/InputFieldUserCred.vue';
-import { Form } from 'vee-validate';
 
 export default {
   name: 'LoginScreen',
   components: {
-    InputFieldUserCred,
-    Form
+    InputFieldUserCred
   },
-  data() {
-    return {
-      email: null,
-      password: null
+  setup() {
+    // Initialise variables
+    const router = useRouter();
+    const username = ref(null);
+    const password = ref(null);
+
+    // GraphQL Methods
+    const { result, load, refetch, error } = useLazyQuery(
+      gql`
+        query GetUserByName($name: String!) {
+          getUserByName(name: $name) {
+            username
+            password
+            _id
+          }
+        }
+      `,
+      () => ({ name: username.value })
+    );
+
+    const userCredentials = computed(() => result.value?.getUserByName ?? []);
+
+    watch(userCredentials, (data) => {
+      console.log(
+        `User credentials: ${data.username} & ${data.password}\n\nUser Inputs: ${username.value} & ${password.value}`
+      );
+
+      if (data && data.username == username.value && data.password == password.value) {
+        router.push('/');
+      }
+    });
+
+    const getCredentials = () => {
+      load() || refetch();
     };
-  },
-  methods: {
-    onSubmit() {
-      console.log(`Submitted`);
-      alert(`Username ${this.email} & Password: ${this.password}`);
-    }
+
+    // Data and methods to be used in template
+    return {
+      username,
+      password,
+      error,
+      getCredentials
+    };
   }
 };
 </script>
@@ -117,5 +154,11 @@ export default {
       color: rgb(0, 255, 128, 0.9);
     }
   }
+}
+
+.invalid-login {
+  font-size: 0.9em;
+  color: rgb(223, 48, 48);
+  margin: 5px 0;
 }
 </style>

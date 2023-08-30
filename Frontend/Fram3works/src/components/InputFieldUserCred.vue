@@ -48,7 +48,7 @@ export default {
     ruleSet() {
       if (this.id === 'username') {
         const rule = string().email().required();
-        console.log(rule);
+
         return rule;
       } else {
         return string().min(8).required();
