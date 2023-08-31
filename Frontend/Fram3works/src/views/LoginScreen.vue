@@ -68,10 +68,6 @@ export default {
     const userCredentials = computed(() => result.value?.getUserByName ?? []);
 
     watch(userCredentials, (data) => {
-      console.log(
-        `User credentials: ${data.username} & ${data.password}\n\nUser Inputs: ${username.value} & ${password.value}`
-      );
-
       if (data && data.username == username.value && data.password == password.value) {
         store.dispatch('updateId', data._id);
         store.dispatch('updateUsername', data.username);
