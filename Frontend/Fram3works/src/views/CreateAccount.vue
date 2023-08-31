@@ -1,30 +1,28 @@
 <template>
   <div class="create-account-content">
     <h2>Create Account</h2>
-    <Form id="create-acc-form" @submit="onSubmit">
-      <InputFieldUserCred
-        id="email"
-        icon="mail"
-        inputType="text"
-        placeholderText="email"
-        v-model="email"
-      />
-      <InputFieldUserCred
-        id="password"
-        icon="lock"
-        inputType="password"
-        placeholderText="password"
-        v-model="password"
-      />
-      <InputFieldUserCred
-        id="confirmPassword"
-        icon="lock"
-        inputType="password"
-        placeholderText="re-enter password"
-        v-model="confirmPassword"
-      />
-      <button>Creat Account</button>
-    </Form>
+    <InputFieldUserCred
+      id="username"
+      icon="mail"
+      inputType="text"
+      placeholderText="username"
+      v-model="username"
+    />
+    <InputFieldUserCred
+      id="password"
+      icon="lock"
+      inputType="password"
+      placeholderText="password"
+      v-model="password"
+    />
+    <InputFieldUserCred
+      id="confirmPassword"
+      icon="lock"
+      inputType="password"
+      placeholderText="re-enter password"
+      v-model="confirmPassword"
+    />
+    <button @click="createNewUser">Creat Account</button>
     <div class="sign-in">
       <p>Already have an account? <router-link to="/login">Sign In</router-link> now!</p>
     </div>
@@ -32,20 +30,54 @@
 </template>
 
 <script>
-import { Form } from 'vee-validate';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useMutation } from '@vue/apollo-composable';
+import { gql } from 'graphql-tag';
+
+// Component imports
 import InputFieldUserCred from '../components/InputFieldUserCred.vue';
 
 export default {
   name: 'CreateAccount',
   components: {
-    InputFieldUserCred,
-    Form
+    InputFieldUserCred
   },
-  date() {
+  setup() {
+    const router = useRouter();
+
+    // State variables
+    const username = ref(null);
+    const password = ref(null);
+    const confirmPassword = ref(null);
+
+    // GraphQL mutation
+    const createUserMutation = gql`
+      mutation CreateUser($user: UserInput!) {
+        createUser(user: $user) {
+          _id
+          username
+        }
+      }
+    `;
+
+    const { mutate: createUser } = useMutation(createUserMutation);
+
+    // Methods
+    const createNewUser = () => {
+      if (password.value === confirmPassword.value) {
+        createUser({ user: { username: username.value, password: password.value } });
+        router.push('/login');
+      } else {
+        alert(`Passwords did not match.`);
+      }
+    };
+
     return {
-      email: null,
-      password: null,
-      confirmPassword: null
+      username,
+      password,
+      confirmPassword,
+      createNewUser
     };
   }
 };
