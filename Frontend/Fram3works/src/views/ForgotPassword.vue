@@ -1,7 +1,17 @@
 <template>
   <div class="forgot-password-content">
     <h2>Forgot Password</h2>
-    <Form id="forgot-pwd-form" @submit="onSubmit">
+    <div id="step1" v-if="currentStep == 1">
+      <InputFieldUserCred
+        id="username"
+        icon="mail"
+        inputType="text"
+        placeholderText="username"
+        v-model="username"
+      />
+      <button @click="getCredentials()">Submit</button>
+    </div>
+    <div id="step2" v-if="currentStep == 2">
       <InputFieldUserCred
         id="newPassword"
         icon="lock"
@@ -16,30 +26,99 @@
         placeholderText="Confirm Password"
         v-model="confirmNewPassword"
       />
-      <button>Change Password</button>
-    </Form>
+      <button @click="updatePassword()">Change Password</button>
+    </div>
     <div class="return-login">
       <p>
         Remembered your details? Return to <router-link to="/login">Login</router-link> page now!
       </p>
     </div>
+    <div id="error" class="invalid-username" v-if="error">
+      <p>Username does not exist.</p>
+    </div>
   </div>
 </template>
 
 <script>
+import { ref, computed, watch } from 'vue';
+import { gql } from 'graphql-tag';
+import { useLazyQuery, useMutation } from '@vue/apollo-composable';
+import { useRouter } from 'vue-router';
+
+// Component imports
 import InputFieldUserCred from '../components/InputFieldUserCred.vue';
-import { Form } from 'vee-validate';
 
 export default {
   name: 'ForgotPassword',
   components: {
-    Form,
     InputFieldUserCred
   },
-  data() {
+  setup() {
+    const router = useRouter();
+
+    // Define state variable
+    const currentStep = ref(1);
+    const username = ref(null);
+    const id = ref(null);
+    const newPassword = ref(null);
+    const confirmNewPassword = ref(null);
+
+    // GraphQL Queries
+    const userCredentialsQuery = gql`
+      query GetUserByName($name: String!) {
+        getUserByName(name: $name) {
+          username
+          _id
+        }
+      }
+    `;
+
+    const passwordMutation = gql`
+      mutation ChangePassword($id: ID!, $password: String!) {
+        changePassword(_id: $id, password: $password)
+      }
+    `;
+
+    // GraphQL Methods
+    const { result, load, refetch, error } = useLazyQuery(userCredentialsQuery, () => ({
+      name: username.value
+    }));
+
+    const userCredentials = computed(() => result.value?.getUserByName ?? []);
+
+    watch(userCredentials, (data) => {
+      id.value = data._id;
+      incrementCurrentStep();
+    });
+
+    const getCredentials = () => {
+      load() || refetch();
+    };
+
+    const { mutate: changePassword } = useMutation(passwordMutation);
+
+    // Methods
+    const incrementCurrentStep = () => {
+      currentStep.value++;
+    };
+
+    const updatePassword = () => {
+      if (newPassword.value === confirmNewPassword.value) {
+        changePassword({ id: id.value, password: newPassword.value });
+        router.push('/login');
+      } else {
+        alert(`Passwords do not match. ${newPassword.value} & ${confirmNewPassword.value}`);
+      }
+    };
+
     return {
-      newPassword: null,
-      confirmNewPassword: null
+      currentStep,
+      username,
+      newPassword,
+      confirmNewPassword,
+      error,
+      getCredentials,
+      updatePassword
     };
   }
 };
@@ -95,5 +174,11 @@ export default {
       color: rgb(0, 255, 128, 0.9);
     }
   }
+}
+
+.invalid-username {
+  font-size: 0.9em;
+  color: rgb(223, 48, 48);
+  margin: 5px 0;
 }
 </style>
