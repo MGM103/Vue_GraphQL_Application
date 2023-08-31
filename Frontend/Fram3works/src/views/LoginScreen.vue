@@ -33,6 +33,7 @@ import { gql } from 'graphql-tag';
 import { ref, computed, watch } from 'vue';
 import { useLazyQuery } from '@vue/apollo-composable';
 import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 // Component imports
 import InputFieldUserCred from '../components/InputFieldUserCred.vue';
@@ -44,9 +45,11 @@ export default {
   },
   setup() {
     // Initialise variables
-    const router = useRouter();
     const username = ref(null);
     const password = ref(null);
+
+    const router = useRouter();
+    const store = useStore();
 
     // GraphQL Methods
     const { result, load, refetch, error } = useLazyQuery(
@@ -70,6 +73,8 @@ export default {
       );
 
       if (data && data.username == username.value && data.password == password.value) {
+        store.dispatch('updateId', data._id);
+        store.dispatch('updateUsername', data.username);
         router.push('/');
       }
     });

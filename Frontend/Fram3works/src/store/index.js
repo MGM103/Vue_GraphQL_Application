@@ -1,20 +1,39 @@
 import { createStore } from 'vuex';
 
-const store = createStore({
-  state: {
-    loggedIn: false,
-    frameworks: []
+const state = {
+  id: null,
+  username: null,
+  frameworks: []
+};
+
+const getters = {
+  getId(state) {
+    return state.id;
   },
-  mutations: {
-    loadFrameworks(state, frameworks) {
-      state.frameworks = frameworks;
-    }
-  },
-  getters: {
-    getFrameworks(state) {
-      return state.frameworks;
-    }
+  getUsername(state) {
+    return state.username;
   }
+};
+
+const actions = {
+  updateId: ({ commit }, id) => commit('updateId', id),
+  updateUsername: ({ commit }, username) => commit('updateUsername', username)
+};
+
+const mutations = {
+  updateId(state, id) {
+    state.id = id;
+  },
+  updateUsername(state, username) {
+    state.username = username;
+  }
+};
+
+const store = createStore({
+  state,
+  getters,
+  actions,
+  mutations
 });
 
 export default store;
