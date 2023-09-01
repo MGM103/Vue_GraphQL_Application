@@ -12,6 +12,9 @@ const getters = {
   },
   getUsername(state) {
     return state.username;
+  },
+  getFrameworks(state) {
+    return state.frameworks;
   }
 };
 
